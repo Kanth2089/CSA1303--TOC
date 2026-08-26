@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    int len, i = 0, leftZeros = 0;
+    int middleOnes = 0, rightZeros = 0;
+    int valid = 1;
+
+    printf("Enter a string over {0,1}: ");
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    /* Count 0's at the beginning */
+    while (i < len && str[i] == '0') {
+        leftZeros++;
+        i++;
+    }
+
+    /* Count 1's in the middle */
+    while (i < len && str[i] == '1') {
+        middleOnes++;
+        i++;
+    }
+
+    /* Count 0's at the end */
+    while (i < len && str[i] == '0') {
+        rightZeros++;
+        i++;
+    }
+
+    /* Any remaining character is invalid */
+    if (i != len)
+        valid = 0;
+
+    /* Number of starting and ending 0's must be equal */
+    if (leftZeros != rightZeros)
+        valid = 0;
+
+    if (valid)
+        printf("Accepted\n");
+    else
+        printf("Rejected\n");
+
+    return 0;
+}
