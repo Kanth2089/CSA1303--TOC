@@ -1,0 +1,71 @@
+#include <stdio.h>
+
+#define MAX 20
+
+int n;
+int epsilon[MAX][MAX];
+int closure[MAX][MAX];
+int visited[MAX];
+
+void findClosure(int start, int current) {
+    int i;
+
+    closure[start][current] = 1;
+    visited[current] = 1;
+
+    for (i = 0; i < n; i++) {
+        if (epsilon[current][i] == 1 && !visited[i]) {
+            findClosure(start, i);
+        }
+    }
+}
+
+int main() {
+    int i, j, edges;
+    int from, to;
+
+    printf("Enter number of states: ");
+    scanf("%d", &n);
+
+    /* Initialize matrices */
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            epsilon[i][j] = 0;
+            closure[i][j] = 0;
+        }
+    }
+
+    printf("Enter number of epsilon transitions: ");
+    scanf("%d", &edges);
+
+    printf("Enter epsilon transitions (from to):\n");
+
+    for (i = 0; i < edges; i++) {
+        scanf("%d %d", &from, &to);
+        epsilon[from][to] = 1;
+    }
+
+    /* Find epsilon closure of every state */
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++)
+            visited[j] = 0;
+
+        findClosure(i, i);
+    }
+
+    /* Display epsilon closures */
+    printf("\nEpsilon Closures:\n");
+
+    for (i = 0; i < n; i++) {
+        printf("ε-closure(q%d) = { ", i);
+
+        for (j = 0; j < n; j++) {
+            if (closure[i][j])
+                printf("q%d ", j);
+        }
+
+        printf("}\n");
+    }
+
+    return 0;
+}
