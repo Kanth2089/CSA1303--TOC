@@ -1,0 +1,40 @@
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str[100];
+    int i, j, len, valid = 1;
+
+    printf("Enter a string over {0,1}: ");
+    scanf("%s", str);
+
+    len = strlen(str);
+
+    for (i = 0; i < len; i++) {
+        if (str[i] != '0' && str[i] != '1') {
+            valid = 0;
+            break;
+        }
+    }
+
+    if (valid) {
+        i = 0;
+        j = len - 1;
+
+        while (i < j) {
+            if (str[i] != str[j]) {
+                valid = 0;
+                break;
+            }
+            i++;
+            j--;
+        }
+    }
+
+    if (valid)
+        printf("Accepted - Palindrome\n");
+    else
+        printf("Rejected - Not a Palindrome\n");
+
+    return 0;
+}
